@@ -1,0 +1,17 @@
+eclipse.preferences.version=1
+encoding//albums/__init__.py=utf8
+encoding//albums/album.py=utf8
+encoding//albums/windows/__init__.py=utf8
+encoding//albums/windows/albums_window.py=utf8
+encoding//albums/windows/new_album_window.py=utf8
+encoding//bands/__init__.py=utf8
+encoding//bands/band.py=utf8
+encoding//bands/windows/__init__.py=utf8
+encoding//bands/windows/bands_window.py=utf8
+encoding//lists/codec.py=utf8
+encoding//lists/country.py=utf8
+encoding//lists/list.py=utf8
+encoding//lists/style.py=utf8
+encoding//members/member.py=utf8
+encoding//settings/windows/settings_window.py=utf8
+encoding/main.py=utf8
