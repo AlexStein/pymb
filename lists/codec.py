@@ -7,3 +7,7 @@ class Codec(List):
     __mapper_args__ = {
         'polymorphic_identity':'codec'
     }
+
+    def __init__(self, name=None):
+        self.name = name
+        self.codec = 'codec'

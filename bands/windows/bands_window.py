@@ -1,7 +1,6 @@
 from gi.repository import Gtk
 
-from base.database import engine, db_session
-from sqlalchemy.sql import select
+from base.database import db_session
 
 from bands.band import Band
 
@@ -12,13 +11,8 @@ class BandsWindow(Gtk.Window):
 
         store = Gtk.ListStore(str, str)
         
-        #conn = engine.connect()        
-        
-        #s = select([bands])
-        #result = conn.execute(s)          
-        
-        for row in db_session.query(Band).order_by(Band.name): 
-            store.append([row.name, row.country])
+        for name, country in db_session.query(Band.name, Band.country).order_by(Band.name): 
+            store.append([name, country])
         
         button = Gtk.Button("Close")
         button.connect("clicked", self.on_button_clicked)

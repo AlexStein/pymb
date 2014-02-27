@@ -1,7 +1,7 @@
 from sqlalchemy import Table, Column, ForeignKey, Integer, String, Date
 from base.database import Base
 
-albums_members_table = Table('albums_members', Base.metadata,
+albums_members_table = Table('members_albums', Base.metadata,
     Column('album_id', Integer, ForeignKey('albums.id')),
     Column('member_id', Integer, ForeignKey('members.id'))
 )
