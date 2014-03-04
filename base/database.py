@@ -1,9 +1,10 @@
 from sqlalchemy import create_engine
-#from sqlalchemy import Table, Column, Integer, String, MetaData, ForeignKey, Date
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
-engine = create_engine('sqlite:////tmp/development.sqlite3', convert_unicode=True)
+engine = create_engine('sqlite:////tmp/development.sqlite3', 
+                       convert_unicode=True)
+
 db_session = scoped_session(sessionmaker(autocommit=False,
                                          autoflush=False,
                                          bind=engine))
