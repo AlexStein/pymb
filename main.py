@@ -1,4 +1,6 @@
 #!/usr/bin/python3
+import os
+
 from gi.repository import Gtk
 
 from bands.windows.bands_window import BandsWindow
@@ -49,6 +51,34 @@ class MainWindow(Gtk.Window):
     def on_click_settings(self, button):
         sw = SettingsWindow()
         sw.show_all()    
+
+def write_pidfile_or_die(path_to_pidfile):
+
+    if os.path.exists(path_to_pidfile):
+        pid = int(open(path_to_pidfile).read())
+
+        if pid_is_running(pid):
+            print("Программа уже запущена!  Process {0} is still running.".format(pid))
+            raise SystemExit
+
+        else:
+            os.remove(path_to_pidfile)
+
+    open(path_to_pidfile, 'w').write(str(os.getpid()))
+    return path_to_pidfile
+
+def pid_is_running(pid):
+    try:
+        os.kill(pid, 0)
+
+    except OSError:
+        return
+
+    else:
+        return pid
+
+# Проверяем pid-файл
+write_pidfile_or_die('/tmp/pymb.pid')
 
 init_db()
     

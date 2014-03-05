@@ -1,8 +1,9 @@
-from gi.repository import Gtk
+from gi.repository import Gtk, Gdk
 
 from base.database import db_session
 
 from bands.band import Band
+from bands.windows.band_window import BandWindow
 
 class BandsWindow(Gtk.Window):
 
@@ -17,7 +18,7 @@ class BandsWindow(Gtk.Window):
         button = Gtk.Button("Close")
         button.connect("clicked", self.on_button_clicked)
 
-        treeView = Gtk.TreeView(self.store)
+        self.treeView = Gtk.TreeView(self.store)
         
         renderer = Gtk.CellRendererText()
        
@@ -26,27 +27,28 @@ class BandsWindow(Gtk.Window):
         
         renderer_name = Gtk.CellRendererText()
         renderer_name.set_property("editable", True)
+        renderer_name.connect("edited", self.name_edited)
         
         c1 = Gtk.TreeViewColumn("Группа", renderer_name, text=1)        
         
         renderer_country = Gtk.CellRendererText()
         renderer_country.set_property("editable", True)
+        renderer_country.connect("edited", self.country_edited)
         
         c2 = Gtk.TreeViewColumn("Страна", renderer_country, text=2)
         
-        treeView.append_column(c0)
-        treeView.append_column(c1)
-        treeView.append_column(c2)
-        treeView.set_headers_clickable = True
+        self.treeView.append_column(c0)
+        self.treeView.append_column(c1)
+        self.treeView.append_column(c2)
+        self.treeView.set_headers_clickable = True
+        self.treeView.connect("button_press_event", self.on_row_doubleclicked)
         
         self.box = Gtk.Box(orientation=1)
         self.add(self.box)
         
-        self.box.pack_start(treeView, True, True, 0)
+        self.box.pack_start(self.treeView, True, True, 0)
         self.box.pack_start(button, True, True, 0)
 
-        renderer_name.connect("edited", self.name_edited)
-        renderer_country.connect("edited", self.country_edited)
 
     def name_edited(self, widget, path, text):
         n = self.store[path][0]
@@ -61,6 +63,15 @@ class BandsWindow(Gtk.Window):
         
         band = db_session.query(Band).get(n)
         band.country = text
+
+    def on_row_doubleclicked(self, widget, event):
+        if event.button == 1 and event.type == Gdk.EventType.DOUBLE_BUTTON_PRESS:
+            treeSelection = self.treeView.get_selection()
+            (model, iter) = treeSelection.get_selected()
+            n = self.store.get_value(iter, 0)          
+            band = db_session.query(Band).get(n)
+            edit_window = BandWindow(band)
+            edit_window.show_all()
 
     def on_button_clicked(self, widget):
         self.destroy()
