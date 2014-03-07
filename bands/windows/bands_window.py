@@ -41,13 +41,16 @@ class BandsWindow(Gtk.Window):
         self.treeView.append_column(c1)
         self.treeView.append_column(c2)
         self.treeView.set_headers_clickable = True
+        self.treeView.set_reorderable(True)
         self.treeView.connect("button_press_event", self.on_row_doubleclicked)
+        self.treeView.connect("key-press-event", self.on_hotkey_pressed)
         
         self.box = Gtk.Box(orientation=1)
+        self.box.set_homogeneous(False)
         self.add(self.box)
         
         self.box.pack_start(self.treeView, True, True, 0)
-        self.box.pack_start(button, True, True, 0)
+        #self.box.pack_end(button, True, True, 0)
 
 
     def name_edited(self, widget, path, text):
@@ -73,6 +76,13 @@ class BandsWindow(Gtk.Window):
             edit_window = BandWindow(band)
             edit_window.show_all()
 
+    def on_hotkey_pressed(self, widget, event):
+        if Gdk.keyval_name(event.keyval) == "Insert":
+            # Добавить группу
+            band = Band(name = "", country = "")
+            edit_window = BandWindow(band)
+            edit_window.show_all()
+                            
     def on_button_clicked(self, widget):
         self.destroy()
         db_session.commit()

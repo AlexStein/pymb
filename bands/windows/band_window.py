@@ -79,7 +79,8 @@ class BandWindow(Gtk.Window):
         if self.edited:
             self.band.name = self.entry1.get_text()
             self.band.country = self.entry2.get_text()
-          
+            
+            db_session.add(self.band)
             db_session.commit()
         
         self.destroy()
