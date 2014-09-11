@@ -1,3 +1,5 @@
+# -*- coding: utf8 -*-
+
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship
 from base.database import Base

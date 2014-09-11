@@ -1,3 +1,4 @@
+# -*- coding: utf8 -*-
 from gi.repository import Gtk
 
 from base.database import db_session

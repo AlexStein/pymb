@@ -1,3 +1,4 @@
+# -*- coding: utf8 -*-
 from gi.repository import Gtk, Gdk
 
 from base.database import db_session
@@ -12,7 +13,7 @@ class BandsWindow(Gtk.Window):
 
         self.store = Gtk.ListStore(int, str, str)
         
-        for n, name, country in db_session.query(Band.id, Band.name, Band.country).order_by(Band.name): 
+        for n, name, country in db_session.query(Band.id, Band.name, Band.country).order_by(Band.name).limit(100): 
             self.store.append([n, name, country])
         
         button = Gtk.Button("Close")
@@ -47,8 +48,13 @@ class BandsWindow(Gtk.Window):
         
         self.box = Gtk.Box(orientation=1)
         self.box.set_homogeneous(False)
-        self.add(self.box)
+
+        self.sw = Gtk.ScrolledWindow()
+        self.sw.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
+        self.sw.add(self.box)
         
+        self.add(self.sw)
+
         self.box.pack_start(self.treeView, True, True, 0)
         #self.box.pack_end(button, True, True, 0)
 

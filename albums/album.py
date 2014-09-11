@@ -1,3 +1,5 @@
+# -*- coding: utf8 -*-
+
 from sqlalchemy import Column, ForeignKey, Integer, String, Date, Boolean
 from sqlalchemy.orm import relationship, backref
 from base.database import Base
