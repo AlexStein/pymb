@@ -7,39 +7,14 @@ from gi.repository import Gtk
 from bands.windows.bands_window import BandsWindow
 from albums.windows.albums_window import AlbumsWindow
 from albums.windows.new_album_window import NewAlbumWindow
-from settings.windows.settings_window import SettingsWindow
 
 from base.database import init_db
-
-class MainWindow(Gtk.Window):
-
-    def __init__(self):
-        Gtk.Window.__init__(self, title="pyMB")
-
-        table = Gtk.Table(2, 2, True)
-        self.add(table)
+        
+class Handler:        
     
-        button1 = Gtk.Button(label="Группы")
-        button1.connect("clicked", self.on_click_bands)
-        
-        button2 = Gtk.Button(label="Альбомы")
-        button2.connect("clicked", self.on_click_albums)
-        
-        button3 = Gtk.Button(label="Добавить")
-        button3.connect("clicked", self.on_click_add_album)
-        
-        button4 = Gtk.Button(label="Настройки")
-        button4.connect("clicked", self.on_click_settings)
-          
-        table.attach(button1, 0, 1, 0, 1)
-        table.attach(button2, 1, 2, 0, 1)
-        table.attach(button3, 0, 1, 1, 2)
-        table.attach(button4, 1, 2, 1, 2)
-  
     def on_click_bands(self, button):
         bw = BandsWindow()
-        bw.resize(480, 360)
-        bw.show_all()
+        bw.window.show_all()
   
     def on_click_albums(self, button):
         aw = AlbumsWindow()
@@ -50,9 +25,13 @@ class MainWindow(Gtk.Window):
         naw.show_all()
       
     def on_click_settings(self, button):
-        sw = SettingsWindow()
+        sw = builder.get_object("settings_window")
+        sw.resize(480, 360)
         sw.show_all()    
 
+    def on_quit(self, *args):
+        Gtk.main_quit(*args)
+        
 def write_pidfile_or_die(path_to_pidfile):
 
     if os.path.exists(path_to_pidfile):
@@ -83,8 +62,12 @@ write_pidfile_or_die('/tmp/pymb.pid')
 
 init_db()
     
-win = MainWindow()
-win.connect("delete-event", Gtk.main_quit)
-win.resize(480, 360)
-win.show_all()
+builder = Gtk.Builder()
+builder.add_from_file("main.ui")
+# Обработкичи событий 
+builder.connect_signals(Handler())
+
+window = builder.get_object("window")
+window.show_all()
+
 Gtk.main()
