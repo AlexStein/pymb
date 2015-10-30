@@ -10,9 +10,9 @@ class BandWindow:
     def __init__(self, band):
 
         builder = Gtk.Builder()
-        builder.add_from_file("band_dialog.ui")
+        builder.add_from_file("band_window.ui")
 
-        self.window = builder.get_object("band_dialog")
+        self.window = builder.get_object("band_window")
         self.entry_name = builder.get_object("entry_name")
         self.entry_country = builder.get_object("entry_country")
         # Обработкичи событий 

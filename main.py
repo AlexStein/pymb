@@ -6,7 +6,7 @@ from gi.repository import Gtk
 
 from bands.windows.bands_window import BandsWindow
 from albums.windows.albums_window import AlbumsWindow
-from albums.windows.new_album_window import NewAlbumWindow
+from albums.windows.album_window import AlbumWindow
 
 from base.database import init_db
         
@@ -18,11 +18,11 @@ class Handler:
   
     def on_click_albums(self, button):
         aw = AlbumsWindow()
-        aw.show_all()
+        aw.window.show_all()
           
     def on_click_add_album(self, button):
-        naw = NewAlbumWindow()
-        naw.show_all()
+        naw = AlbumWindow()
+        naw.window.show_all()
       
     def on_click_settings(self, button):
         sw = builder.get_object("settings_window")

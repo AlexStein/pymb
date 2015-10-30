@@ -6,7 +6,7 @@
     <property name="minimum_key_length">2</property>
     <property name="inline_completion">True</property>
   </object>
-  <object class="GtkDialog" id="band_dialog">
+  <object class="GtkDialog" id="band_window">
     <property name="can_focus">False</property>
     <property name="window_position">center-on-parent</property>
     <property name="default_width">480</property>
@@ -111,12 +111,38 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="hexpand">True</property>
+                <property name="progress_pulse_step">0.060000000894069677</property>
                 <property name="completion">entrycompletion</property>
                 <signal name="changed" handler="on_entry_changed" swapped="no"/>
               </object>
               <packing>
                 <property name="left_attach">1</property>
                 <property name="top_attach">1</property>
+                <property name="width">1</property>
+                <property name="height">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label_description">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Примечание</property>
+              </object>
+              <packing>
+                <property name="left_attach">0</property>
+                <property name="top_attach">2</property>
+                <property name="width">1</property>
+                <property name="height">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkEntry" id="entry_description">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+              </object>
+              <packing>
+                <property name="left_attach">1</property>
+                <property name="top_attach">2</property>
                 <property name="width">1</property>
                 <property name="height">1</property>
               </packing>

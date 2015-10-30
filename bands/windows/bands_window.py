@@ -38,14 +38,15 @@ class BandsWindow:
         band.country = text
 
     def on_refresh_button_clicked(self, widget):
-        self.refresh_treeview
+        self.refresh_treeview()
     
     def refresh_treeview(self):
         self.store.clear()
         db_session.refresh
         for n, name, country in db_session.query(Band.id, Band.name, Band.country).order_by(Band.name).limit(100): 
             self.store.append([n, name, country])        
-
+        self.treeView.set_model(self.store)
+        
     def on_row_doubleclicked(self, widget, event):
         if event.button == 1 and event.type == Gdk.EventType.DOUBLE_BUTTON_PRESS:
             treeSelection = self.treeView.get_selection()
